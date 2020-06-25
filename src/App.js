@@ -1,7 +1,6 @@
-// tutorial by Joe Karlsson
 import React, { Component } from 'react';
 import * as $ from "jquery";
-import Player from "./Player";
+import PlaylistSidebar from "./PlaylistSidebar"
 import hash from "./hash";
 import logo from './logo.svg';
 import './App.css';
@@ -11,9 +10,12 @@ export const authEndpoint = "https://accounts.spotify.com/authorize";
 const clientId = "308136625304484d92879d69e98ccd89";
 const redirectUri = "http://localhost:3000";
 const scopes = [
-  "user-top-read",
-  "user-read-currently-playing",
-  "user-read-playback-state"
+  "ugc-image-upload",
+  "user-read-recently-played",
+  "playlist-read-collaborative",
+  "playlist-modify-private",
+  "playlist-modify-public",
+  "playlist-read-private"
 ]
 
 class App extends Component {
@@ -21,20 +23,10 @@ class App extends Component {
     super();
     this.state = {
       token: null,
-      item: {
-        album: {
-          images: [{ url: "" }]
-        },
-        name: "",
-        artists: [{ name: ""}],
-        duration_ms: 0,
-      },
-      is_playing: "Paused",
-      progress_ms: 0,
+      playlists: [],
       no_data: false
     }
-    this.getCurrentlyPlaying = this.getCurrentlyPlaying.bind(this);
-    this.tick = this.tick.bind(this);
+    this.getPlaylists = this.getPlaylists.bind(this);
   }
 
   componentDidMount() {
@@ -43,29 +35,16 @@ class App extends Component {
       this.setState({
         token: _token
       });
-    }
-
-    this.tick();
-    // poll every 5 seconds
-    this.interval = setInterval(() => this.tick(), 5000);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.interval);
-  }
-
-  tick() {
-    if (this.state.token) {
-      this.getCurrentlyPlaying(this.state.token);
+      this.getPlaylists(_token);
     }
   }
 
-  getCurrentlyPlaying(token) {
+  getPlaylists(token) {
     $.ajax({
-      url: "https://api.spotify.com/v1/me/player",
+      url: "https://api.spotify.com/v1/me/playlists",
       type: "GET",
       beforeSend: xhr => {
-        xhr.setRequestHeader("Authorization" , "Bearer " + token);
+        xhr.setRequestHeader("Authorization", "Bearer " + token);
       },
       success: (data) => {
         if (!data) {
@@ -75,20 +54,16 @@ class App extends Component {
           return;
         }
         this.setState({
-          item: data.item,
-          is_playing: data.is_playing,
-          progress_ms: data.progress_ms,
-          no_data: false
-        });
+          playlists: data.items
+        })
       }
-    });
+    })
   }
 
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
           {!this.state.token && (
             <a
               className="btn btn--loginApp-link"
@@ -98,7 +73,7 @@ class App extends Component {
             </a>
           )}
           {this.state.token && (
-            <Player item={this.state.item} is_playing={this.state.is_playing} progress_ms={this.progress_ms}/>
+            <PlaylistSidebar playlists={this.state.playlists}/>
           )}
         </header>
       </div>
