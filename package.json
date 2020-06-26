@@ -1,0 +1,24 @@
+{
+  "name": "playlistats",
+  "version": "1.0.0",
+  "description": "Generate statistics on a given Spotify playlist",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leesgrey/playlistats.git"
+  },
+  "keywords": [
+    "Spotify",
+    "playlist",
+    "statistics"
+  ],
+  "author": "Grey Lee <sieun.v.lee@gmail.com> (http://leesgrey.github.io/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/leesgrey/playlistats/issues"
+  },
+  "homepage": "https://github.com/leesgrey/playlistats#readme"
+}
