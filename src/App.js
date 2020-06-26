@@ -8,7 +8,7 @@ import './App.css';
 export const authEndpoint = "https://accounts.spotify.com/authorize";
 
 const clientId = "308136625304484d92879d69e98ccd89";
-const redirectUri = "http://localhost:3000";
+const redirectUri = "http://leesgrey.github.io/musichar";
 const scopes = [
   "ugc-image-upload",
   "user-read-recently-played",
@@ -41,7 +41,7 @@ class App extends Component {
 
   getPlaylists(token) {
     $.ajax({
-      url: "https://api.spotify.com/v1/me/playlists",
+      url: "https://api.spotify.com/v1/me/playlists?limit=50",
       type: "GET",
       beforeSend: xhr => {
         xhr.setRequestHeader("Authorization", "Bearer " + token);
