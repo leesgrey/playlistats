@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "dbb136e7844c947cf2590941b0983285",
+    "revision": "2e71851d166c94abd03a8e9a6c1eee3a",
     "url": "/musichar/index.html"
   },
   {
-    "revision": "7df8693e26c6f401e475",
+    "revision": "470cfba5c9281b639d94",
     "url": "/musichar/static/css/main.db005455.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/musichar/static/js/2.3df76528.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "7df8693e26c6f401e475",
-    "url": "/musichar/static/js/main.2a3dd9e8.chunk.js"
+    "revision": "470cfba5c9281b639d94",
+    "url": "/musichar/static/js/main.286ebf23.chunk.js"
   },
   {
     "revision": "d7581ddbbec818837fa5",
