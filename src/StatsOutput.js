@@ -16,7 +16,10 @@ class StatsOutput extends Component {
   render() {
     return(
       <div className="StatsOutput">
-        {this.state.tracks ? this.state.tracks.name : this.props.current}
+        <ul>
+          <p>{this.props.selected}</p>
+          <p>{this.props.energy}</p>
+        </ul>
       </div>
     )
   }

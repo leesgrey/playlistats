@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./PlaylistSidebar.css";
 import * as $ from "jquery";
 import StatsOutput from "./StatsOutput";
+import * from './Calls.js';
 
 class PlaylistSidebar extends Component {
   constructor(props) {
@@ -10,10 +11,13 @@ class PlaylistSidebar extends Component {
       selected: null,
       token: this.props.token,
       no_data: false,
-      playlist_data: null
+      playlist_data: null,
+      energy: null
     }
   this.handleClick = this.handleClick.bind(this);
   this.getTracks = this.getTracks.bind(this)
+  this.processAverage = this.processAverage.bind(this);
+  this.getTrackFeatures = getTrackFeatures.bind(this);
   }
 
   handleClick(id) {
@@ -21,6 +25,7 @@ class PlaylistSidebar extends Component {
       selected: id
     })
     this.getTracks(id)
+    this.getTrackFeatures(this.state.token, id)
   }
 
   getTracks(id) {
@@ -38,11 +43,23 @@ class PlaylistSidebar extends Component {
           return;
         }
         this.setState({
-          playlist_data: data
+          playlist_data: data,
+          energy: this.processAverage("energy", data.tracks.items)
         })
-      console.log(data)
       }
     })
+  }
+
+  processAverage(key, tracks){
+    console.log(tracks)
+    let sum = 0;
+    let count = tracks.length;
+    let track;
+    for (let i = 0; i < count; i++){
+      console.log(tracks[i])
+      sum += tracks[i].track.popularity
+    }
+    return sum / count
   }
 
   render() {
@@ -55,7 +72,7 @@ class PlaylistSidebar extends Component {
             ))}
           </ul>
         </div>
-        {this.state.selected && <StatsOutput current={this.state.selected} tracks={this.state.playlist_data}/>}
+        {this.state.selected && <StatsOutput selected={this.state.selected} energy={this.state.energy}/>}
       </div>
     )
   }
