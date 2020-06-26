@@ -2,7 +2,7 @@
   background-color: #aed;
   display: inline-block;
   height: 100vh;
-  width: 10%;
+  width: 20%;
   white-space: nowrap;
   overflow-x: hidden;
   overflow-y: scroll;
@@ -11,4 +11,5 @@
 li {
   list-style-type: none;
   margin-bottom: 10px;
+  cursor: pointer;
 }

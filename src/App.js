@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import * as $ from "jquery";
 import PlaylistSidebar from "./PlaylistSidebar"
 import hash from "./hash";
-import logo from './logo.svg';
 import './App.css';
 
 export const authEndpoint = "https://accounts.spotify.com/authorize";
 
 const clientId = "308136625304484d92879d69e98ccd89";
-const redirectUri = "http://leesgrey.github.io/musichar";
+//const redirectUri = "http://leesgrey.github.io/musichar";
+const redirectUri = "http://localhost:3000";
 const scopes = [
   "ugc-image-upload",
   "user-read-recently-played",
@@ -73,7 +73,7 @@ class App extends Component {
             </a>
           )}
           {this.state.token && (
-            <PlaylistSidebar playlists={this.state.playlists}/>
+            <PlaylistSidebar token={this.state.token} playlists={this.state.playlists}/>
           )}
         </header>
       </div>

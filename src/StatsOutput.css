@@ -1,0 +1,9 @@
+.StatsOutput {
+  float: right;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 300px;
+  background-color: #ace;
+  height: 300px;
+}
