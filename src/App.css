@@ -28,7 +28,7 @@ h1 {
 }
 
 .sidebar {
-  width: 20%;
+  width: 20vw;
   display: inline-block;
 }
 
@@ -71,4 +71,5 @@ a:hover {
   display: inline-block;
   vertical-align: top;
   margin: 0 10px;
+  width: 75vw;
 }

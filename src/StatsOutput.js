@@ -19,7 +19,6 @@ class StatsOutput extends Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.bleh !== prevProps.bleh){
-      console.log("Loading playlist stats")
       calls.getObjects(this.props.token, this.props.bleh, this.storeTrackObjects)
     }
   }
@@ -28,7 +27,6 @@ class StatsOutput extends Component {
     this.setState({
       track_objects: tracks
     })
-    console.log("Track objects set")
     calls.getFeatures(this.props.token, this.state.track_objects, this.storeTrackFeatures)
   }
 
@@ -36,8 +34,6 @@ class StatsOutput extends Component {
     this.setState({
       track_features: features
     })
-    console.log("Track features set")
-    console.log(this.state)
     this.storeStats();
   }
 
@@ -45,8 +41,6 @@ class StatsOutput extends Component {
     this.setState({
       stats: stats.iterate(this.state)
     })
-    console.log("stats stored")
-    console.log(this.state)
   }
 
   getModeString() {
@@ -72,7 +66,7 @@ class StatsOutput extends Component {
           <h3>{this.props.bleh}</h3>
           <p>{this.getModeString()} with {this.state.stats.major} major song{this.state.stats.major != 1 && "s"} and {this.state.track_objects.items.length - this.state.stats.major} minor song{this.state.track_objects.items.length - this.state.stats.major != 1 && "s"}.</p>
           <ModeDoughnut id={this.props.bleh} major={this.state.stats.major} minor={this.state.stats.minor}/>
-          <p>This playlist has an average popularity of x with a variance of x.</p>
+          <p>This playlist has an average popularity of {this.state.stats.avgPopularity}, with the most popular song being "{this.state.stats.mostPopular}" and the least popular song being "{this.state.stats.leastPopular}".</p>
           <p>This playlist has an average valence of x with a variance of x.</p>
           <p>This playlist features x artists.</p>
         </div>
