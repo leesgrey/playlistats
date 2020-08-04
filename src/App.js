@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import * as $ from "jquery";
 import PlaylistSidebar from "./PlaylistSidebar"
 import hash from "./hash";
 import './App.css';
+import * as calls from "./Calls.js"
 
 export const authEndpoint = "https://accounts.spotify.com/authorize";
 
 const clientId = "308136625304484d92879d69e98ccd89";
-//const redirectUri = "http://leesgrey.github.io/musichar";
-const redirectUri = "http://localhost:3000";
+
+/**const redirectUri = "http://localhost:3000";**/
+const redirectUri = "http://leesgrey.github.io/musichar";
 const scopes = [
   "ugc-image-upload",
   "user-read-recently-played",
@@ -21,12 +22,19 @@ const scopes = [
 class App extends Component {
   constructor() {
     super();
+
     this.state = {
       token: null,
       playlists: [],
       no_data: false
     }
-    this.getPlaylists = this.getPlaylists.bind(this);
+    this.setPlaylists = this.setPlaylists.bind(this);
+  }
+
+  setPlaylists(data) {
+    this.setState({
+      playlists: data
+    })
   }
 
   componentDidMount() {
@@ -35,29 +43,8 @@ class App extends Component {
       this.setState({
         token: _token
       });
-      this.getPlaylists(_token);
+    calls.getPlaylists(_token, this.setPlaylists);
     }
-  }
-
-  getPlaylists(token) {
-    $.ajax({
-      url: "https://api.spotify.com/v1/me/playlists?limit=50",
-      type: "GET",
-      beforeSend: xhr => {
-        xhr.setRequestHeader("Authorization", "Bearer " + token);
-      },
-      success: (data) => {
-        if (!data) {
-          this.setState({
-            no_data: true
-          });
-          return;
-        }
-        this.setState({
-          playlists: data.items
-        })
-      }
-    })
   }
 
   render() {
@@ -65,15 +52,24 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           {!this.state.token && (
-            <a
-              className="btn btn--loginApp-link"
-              href={`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join("%20")}&response_type=token&show_dialog=true`}
-              >
-              Login to Spotify
-            </a>
+            <div id="landing">
+              <h1>petalist</h1>
+              <p>generate spotify playlist statistics and a bouquet to take with you</p>
+              <a
+                className="btn btn--loginApp-link"
+                href={`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join("%20")}&response_type=token&show_dialog=true`}
+                >
+                log into spotify
+              </a>
+            </div>
           )}
           {this.state.token && (
-            <PlaylistSidebar token={this.state.token} playlists={this.state.playlists}/>
+            <div id="loginDisplay">
+              <div id="header">
+                <h1>petalist</h1>
+              </div>
+              <PlaylistSidebar token={this.state.token} playlists={this.state.playlists}/>
+            </div>
           )}
         </header>
       </div>

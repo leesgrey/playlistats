@@ -1,6 +1,74 @@
-.App {
-  background-color: #fae;
+body {
+  background-color: #1a1b41;
   margin: 0;
-  width: 100vw;
-  height: 100vh;
+  font-family: "Courier New", serif;
+  color: #dddddd;
+}
+
+li {
+  list-style: none;
+}
+
+#landing {
+  width: 50%;
+  margin: 0 auto;
+  margin-top: 50vh;
+  transform: translateY(-50%);
+}
+
+h1 {
+  color: #FC6471;
+  font-size: 3.5em;
+  margin: 0;
+}
+
+#loginDisplay h1 {
+  font-size: 2.5em;
+  margin-left: 10px;
+}
+
+.sidebar {
+  width: 20%;
+  display: inline-block;
+}
+
+ul {
+  list-style-position: inside;
+  margin: 0;
+  padding: 0;
+  overflow-y: scroll;
+}
+
+li {
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+  white-space: nowrap;
+  color: #ACFCD9;
+  cursor: pointer;
+  padding-left: 10px;
+  min-height: 1em;
+  height: 3vh;
+}
+
+li:hover {
+  background-color: #55D6BE;
+  color: #1a1b41;
+}
+
+a {
+  background-color: #55d6be;
+  padding: 5px;
+  text-decoration: none;
+  color: #1a1b41;
+  cursor: pointer;
+}
+
+a:hover {
+  background-color: #ACFCD9;
+}
+
+#statsOutput {
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 10px;
 }
