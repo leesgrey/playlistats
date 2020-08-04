@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/musichar/static/css/main.615e2c40.chunk.css",
-    "main.js": "/musichar/static/js/main.a7031c63.chunk.js",
-    "main.js.map": "/musichar/static/js/main.a7031c63.chunk.js.map",
+    "main.js": "/musichar/static/js/main.b292aac9.chunk.js",
+    "main.js.map": "/musichar/static/js/main.b292aac9.chunk.js.map",
     "runtime-main.js": "/musichar/static/js/runtime-main.7005eb9f.js",
     "runtime-main.js.map": "/musichar/static/js/runtime-main.7005eb9f.js.map",
     "static/js/2.0899d988.chunk.js": "/musichar/static/js/2.0899d988.chunk.js",
     "static/js/2.0899d988.chunk.js.map": "/musichar/static/js/2.0899d988.chunk.js.map",
     "index.html": "/musichar/index.html",
-    "precache-manifest.a9c2a8c53d1e7655d6ccef54da089430.js": "/musichar/precache-manifest.a9c2a8c53d1e7655d6ccef54da089430.js",
+    "precache-manifest.fa69aca5c753852543ed9c6f54446539.js": "/musichar/precache-manifest.fa69aca5c753852543ed9c6f54446539.js",
     "service-worker.js": "/musichar/service-worker.js",
     "static/css/main.615e2c40.chunk.css.map": "/musichar/static/css/main.615e2c40.chunk.css.map",
     "static/js/2.0899d988.chunk.js.LICENSE.txt": "/musichar/static/js/2.0899d988.chunk.js.LICENSE.txt"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.7005eb9f.js",
     "static/js/2.0899d988.chunk.js",
     "static/css/main.615e2c40.chunk.css",
-    "static/js/main.a7031c63.chunk.js"
+    "static/js/main.b292aac9.chunk.js"
   ]
 }
