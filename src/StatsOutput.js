@@ -56,7 +56,7 @@ class StatsOutput extends Component {
         <div id="infoContainer">
           <h3>{this.props.bleh}</h3>
           <p>This playlist is mostly {this.state.stats.major > this.state.track_objects.items.length / 2 ? "major" : "minor"} with {this.state.stats.major} major song{this.state.stats.major != 1 && "s"} and {this.state.track_objects.items.length - this.state.stats.major} minor song{this.state.track_objects.items.length - this.state.stats.major != 1 && "s"}.</p>
-          <ModeDoughnut id={this.props.bleh} major={this.state.stats.major} minor={this.state.track_objects.items.length - this.state.stats.major}/>
+          <ModeDoughnut id={this.props.bleh} major={this.state.stats.major} minor={this.state.stats.minor}/>
           <p>This playlist has an average popularity of x with a variance of x.</p>
           <p>This playlist has an average valence of x with a variance of x.</p>
           <p>This playlist features x artists.</p>
