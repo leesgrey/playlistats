@@ -17,11 +17,9 @@ class StatsOutput extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.bleh != prevProps.bleh){
-      // get track objects
+    if (this.props.bleh !== prevProps.bleh){
+      console.log("Loading playlist stats")
       calls.getObjects(this.props.token, this.props.bleh, this.storeTrackObjects)
-      // get track features
-      // calculate stuff
     }
   }
 
@@ -29,6 +27,7 @@ class StatsOutput extends Component {
     this.setState({
       track_objects: tracks
     })
+    console.log("Track objects set")
     calls.getFeatures(this.props.token, this.state.track_objects, this.storeTrackFeatures)
   }
 
@@ -36,15 +35,17 @@ class StatsOutput extends Component {
     this.setState({
       track_features: features
     })
-    this.setState({
-      stats: stats.iterate(this.state.track_features)
-    })
+    console.log("Track features set")
+    console.log(this.state)
+    this.storeStats();
   }
 
-  storeStats(stats){
+  storeStats(){
     this.setState({
-      stats: stats
+      stats: stats.iterate(this.state)
     })
+    console.log("stats stored")
+    console.log(this.state)
   }
 
   render() {

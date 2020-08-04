@@ -21,7 +21,7 @@ export function getObjects(token, playlistId, callback) {
     }
   })
   .then((res) => {
-    callback(res.data);
+    callback(res.data)
   })
   .catch((error) => {
     console.error(error);
