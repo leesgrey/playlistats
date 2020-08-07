@@ -14,8 +14,6 @@ const scopes = [
   "ugc-image-upload",
   "user-read-recently-played",
   "playlist-read-collaborative",
-  "playlist-modify-private",
-  "playlist-modify-public",
   "playlist-read-private"
 ]
 

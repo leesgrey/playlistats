@@ -28,8 +28,6 @@ class ModeDoughnut extends Component {
 
   componentDidUpdate(prevProps) {
     if (this.props !== prevProps){
-      console.log("updating graph")
-      console.log(this.props)
       this.setState(this.getState())
     }
   }

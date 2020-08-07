@@ -12,11 +12,11 @@ class PlaylistSidebar extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick(id) {
+  handleClick(id, name) {
     this.setState({
-      selected: id
+      selected: id,
+      name: name
     })
-    console.log(id);
   }
 
   render() {
@@ -24,12 +24,13 @@ class PlaylistSidebar extends Component {
       <div>
         <div className="sidebar">
           <ul>
+            <li onClick={() => this.handleClick(0, "Recently Played")} className="playlist_item" key={0}>Recently Played</li>
             {Array.from(this.props.playlists).map( i => (
-            <li onClick={() => this.handleClick(i.id)} className="playlist_item" key={i.id}>{i.name}</li>
+            <li onClick={() => this.handleClick(i.id, i.name)} className="playlist_item" key={i.id}>{i.name}</li>
             ))}
           </ul>
         </div>
-        <StatsOutput token={this.state.token} bleh={this.state.selected}/>
+        <StatsOutput token={this.state.token} name={this.state.name} bleh={this.state.selected}/>
       </div>
     )
   }

@@ -15,17 +15,33 @@ export function getPlaylists(token, callback) {
 }
 
 export function getObjects(token, playlistId, callback) {
-  axios.get('https://api.spotify.com/v1/playlists/' + playlistId + '/tracks', {
-    headers: {
-      'Authorization': 'Bearer ' + token
-    }
-  })
-  .then((res) => {
-    callback(res.data)
-  })
-  .catch((error) => {
-    console.error(error);
-  })
+  if (playlistId){
+    axios.get('https://api.spotify.com/v1/playlists/' + playlistId + '/tracks', {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    })
+    .then((res) => {
+      callback(res.data)
+    })
+    .catch((error) => {
+      console.error(error);
+    })
+  }
+  else {
+    axios.get('https://api.spotify.com/v1/me/player/recently-played', {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    })
+    .then((res) => {
+      callback(res.data)
+    })
+    .catch((error) => {
+      console.error(error);
+    })
+
+  }
 }
 
 function getTrackString(trackObjects) {

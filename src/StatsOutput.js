@@ -76,7 +76,7 @@ class StatsOutput extends Component {
         {!this.state.stats && (<h3>select a playlist to begin</h3>)}
         {this.state.stats && (
         <div id="infoContainer">
-          <h3>{this.props.bleh}</h3>
+          <h3>{this.props.name}</h3>
           <p>This playlist is <span className="bold">{this.getModeString()}</span> with <span className="bold">{this.state.stats.major} major song{this.state.stats.major != 1 && "s"}</span> and <span className="bold">{this.state.track_objects.items.length - this.state.stats.major} minor song{this.state.track_objects.items.length - this.state.stats.major != 1 && "s"}</span>.</p>
           <ModeDoughnut id={this.props.bleh} major={this.state.stats.major} minor={this.state.stats.minor}/>
           <p>This playlist has songs in the following <span className="under">time signatures</span>: <span className="bold">{this.getTimeSigString()}</span>.</p>

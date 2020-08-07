@@ -44,14 +44,11 @@ class TimeSigDoughnut extends Component {
         colors.push('rgba(' + Math.floor(Math.random() * 255).toString() + ', ' + Math.floor(Math.random() * 255).toString() + ', ' + Math.floor(Math.random() * 255).toString() + ')')
       }
     })
-    console.log(colors)
     return colors;
   }
 
   componentDidUpdate(prevProps) {
     if (this.props !== prevProps){
-      console.log("updating timesig graph")
-      console.log(this.props)
       this.setState(this.getState())
     }
   }
