@@ -25,6 +25,7 @@ class ModeDoughnut extends Component {
     })
   }
 
+
   componentDidUpdate(prevProps) {
     if (this.props !== prevProps){
       console.log("updating graph")
@@ -35,7 +36,7 @@ class ModeDoughnut extends Component {
 
   render() {
     return(
-      <Doughnut data={this.state} key={this.props.minor}/>
+      <Doughnut width="600" data={this.state} key={this.props.minor}/>
     )
   }
 }

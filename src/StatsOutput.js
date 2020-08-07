@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import * as calls from './Calls.js';
 import * as stats from './Stats.js';
 import ModeDoughnut from './ModeDoughnut.js';
+import TimeSigDoughnut from './TimeSigDoughnut.js';
 
 class StatsOutput extends Component {
   constructor(props) {
@@ -15,6 +16,7 @@ class StatsOutput extends Component {
     this.storeTrackFeatures = this.storeTrackFeatures.bind(this);
     this.storeStats = this.storeStats.bind(this);
     this.getModeString = this.getModeString.bind(this);
+    this.getTimeSigString = this.getTimeSigString.bind(this)
   }
 
   componentDidUpdate(prevProps) {
@@ -44,7 +46,7 @@ class StatsOutput extends Component {
   }
 
   getModeString() {
-    let result = "This playlist is "
+    let result = ""
     if (this.state.stats.major == this.state.stats.minor) {
       result += "equally major and minor "
     }
@@ -57,6 +59,17 @@ class StatsOutput extends Component {
     return result;
   }
 
+  getTimeSigString() {
+    let result = "["
+    this.state.stats.timeSigs.forEach(function(sig){
+      result += sig.toString()
+      result += ", "
+    })
+    result = result.slice(0, -2)
+    result += "]"
+    return result;
+  }
+
   render() {
     return(
       <div id="statsOutput">
@@ -64,11 +77,16 @@ class StatsOutput extends Component {
         {this.state.stats && (
         <div id="infoContainer">
           <h3>{this.props.bleh}</h3>
-          <p>{this.getModeString()} with {this.state.stats.major} major song{this.state.stats.major != 1 && "s"} and {this.state.track_objects.items.length - this.state.stats.major} minor song{this.state.track_objects.items.length - this.state.stats.major != 1 && "s"}.</p>
+          <p>This playlist is <span className="bold">{this.getModeString()}</span> with <span className="bold">{this.state.stats.major} major song{this.state.stats.major != 1 && "s"}</span> and <span className="bold">{this.state.track_objects.items.length - this.state.stats.major} minor song{this.state.track_objects.items.length - this.state.stats.major != 1 && "s"}</span>.</p>
           <ModeDoughnut id={this.props.bleh} major={this.state.stats.major} minor={this.state.stats.minor}/>
-          <p>This playlist has an average popularity of {this.state.stats.avgPopularity}, with the most popular song being "{this.state.stats.mostPopular}" by {this.state.stats.mostPopularArtist} and the least popular song being "{this.state.stats.leastPopular}" by {this.state.stats.leastPopularArtist}.</p>
-          <p>This playlist has an average valence of x with a variance of x.</p>
-          <p>This playlist features x artists.</p>
+          <p>This playlist has songs in the following <span className="under">time signatures</span>: <span className="bold">{this.getTimeSigString()}</span>.</p>
+          <p className="explanation">"The time signature (meter) is a notational convention to specify how many beats are in each bar (or measure)."</p>
+          <TimeSigDoughnut id={this.props.bleh} sigCount={this.state.stats.sigCount}/>
+          <p>The average song duration is <span className="bold">{this.state.stats.avgDurationMin} minutes and {this.state.stats.avgDurationSec} seconds.</span></p>
+          <p>This playlist has an average <span className="under">popularity</span> of <span className="bold">{this.state.stats.avgPopularity}</span>, with the most popular song being <span className="bold">"{this.state.stats.mostPopular}" by {this.state.stats.mostPopularArtist}</span> and the least popular song being <span className="bold">"{this.state.stats.leastPopular}" by {this.state.stats.leastPopularArtist}</span>.</p>
+          <p className="explanation">"The popularity of a track is a value between 0 and 100, with 100 being the most popular. The popularity is calculated by algorithm and is based, in the most part, on the total number of plays the track has had and how recent those plays are."</p>
+          <p>This playlist has an average <span className="under">valence</span> of <span className="bold">{this.state.stats.avgValence}</span>.</p>
+          <p className="explanation">	Valence is "a measure from 0.0 to 1.0 describing the musical positiveness conveyed by a track. Tracks with high valence sound more positive (e.g. happy, cheerful, euphoric), while tracks with low valence sound more negative (e.g. sad, depressed, angry)."</p>
         </div>
         )}
       </div>

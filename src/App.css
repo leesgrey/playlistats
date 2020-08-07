@@ -67,6 +67,26 @@ a:hover {
   background-color: #ACFCD9;
 }
 
+.explanation {
+  margin-top: 0;
+  font-style: italic;
+}
+
+canvas {
+  width: 200px;
+}
+.bold {
+  font-weight: bold;
+}
+
+.explanation {
+  padding-left: 20px;
+}
+
+.under {
+  text-decoration: underline;
+}
+
 #statsOutput {
   display: inline-block;
   vertical-align: top;

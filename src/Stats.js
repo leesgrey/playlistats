@@ -8,7 +8,21 @@ export function iterate(stats){
   let leastPopular;
   let leastPopularArtist;
   let leastPopularNum = 101;
+  let valence = 0;
+  let duration = 0;
+  let timeSigs = []
+
   stats.track_features.audio_features.forEach(function(track){
+    // time sig
+    timeSigs.push(track.time_signature)
+
+    // duration
+    duration += track.duration_ms
+
+    // valence
+    valence += track.valence
+
+    // mode tracking
     if (track.mode){
       major++;
     }
@@ -39,9 +53,21 @@ export function iterate(stats){
     mostPopular: mostPopular,
     mostPopularArtist: mostPopularArtist,
     leastPopular: leastPopular,
-    leastPopularArtist: leastPopularArtist
+    leastPopularArtist: leastPopularArtist,
+    avgDurationMin: Math.round(((duration / stats.track_features.audio_features.length) / 60000)),
+    avgDurationSec: Math.round((((duration / stats.track_features.audio_features.length) / 60000) % 1) * 60),
+    avgValence: (valence / stats.track_features.audio_features.length).toFixed(3),
+    timeSigs: [...new Set(timeSigs)],
+    sigCount: processTimeSigs(timeSigs)
   }
-  console.log(data)
   return data
 }
 
+function processTimeSigs(sigArray) {
+  let unique = [...new Set(sigArray)]
+  let sigCount = {}
+  unique.forEach(function(sig){
+    sigCount[sig] = sigArray.filter(x => x == sig).length;
+  })
+  return sigCount;
+}
