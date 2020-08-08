@@ -34,7 +34,7 @@ class ModeDoughnut extends Component {
 
   render() {
     return(
-      <Doughnut width="600" data={this.state} key={this.props.minor}/>
+      <Doughnut data={this.state} key={this.props.minor}/>
     )
   }
 }

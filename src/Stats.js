@@ -11,6 +11,7 @@ export function iterate(stats){
   let valence = 0;
   let duration = 0;
   let timeSigs = []
+  let keys = []
 
   stats.track_features.audio_features.forEach(function(track){
     // time sig
@@ -22,11 +23,13 @@ export function iterate(stats){
     // valence
     valence += track.valence
 
-    // mode tracking
+    // key + mode tracking
     if (track.mode){
+      keys.push(track.key.toString() + "+")
       major++;
     }
     else {
+      keys.push(track.key.toString() + "-")
       minor++;
     }
   })
@@ -58,16 +61,28 @@ export function iterate(stats){
     avgDurationSec: Math.round((((duration / stats.track_features.audio_features.length) / 60000) % 1) * 60),
     avgValence: (valence / stats.track_features.audio_features.length).toFixed(3),
     timeSigs: [...new Set(timeSigs)],
-    sigCount: processTimeSigs(timeSigs)
+    sigCount: processArray(timeSigs),
+    uniqueKeys: [...new Set(keys.sort(function(a, b){return parseInt(a.slice(0, -1)) - parseInt(b.slice(0, -1))}))],
+    keyCount: processSortArray(keys)
   }
+  console.log(data)
   return data
 }
 
-function processTimeSigs(sigArray) {
-  let unique = [...new Set(sigArray)]
-  let sigCount = {}
-  unique.forEach(function(sig){
-    sigCount[sig] = sigArray.filter(x => x == sig).length;
+function processSortArray(rawArray) {
+  let unique = [...new Set(rawArray)]
+  let keyCount = {}
+  unique.forEach(function(key){
+    keyCount[key] = rawArray.filter(x => x === key).length;
   })
-  return sigCount;
+  return keyCount;
+}
+
+function processArray(rawArray) {
+  let unique = [...new Set(rawArray)]
+  let keyCount = {}
+  unique.forEach(function(key){
+    keyCount[key] = rawArray.filter(x => x === key).length;
+  })
+  return keyCount;
 }

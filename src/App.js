@@ -8,8 +8,9 @@ export const authEndpoint = "https://accounts.spotify.com/authorize";
 
 const clientId = "308136625304484d92879d69e98ccd89";
 
-//const redirectUri = "http://localhost:3000";
-const redirectUri = "http://leesgrey.github.io/musichar";
+const redirectUri = "http://localhost:3000";
+//const redirectUri = "http://leesgrey.github.io/musichar";
+
 const scopes = [
   "ugc-image-upload",
   "user-read-recently-played",
@@ -52,7 +53,7 @@ class App extends Component {
           {!this.state.token && (
             <div id="landing">
               <h1>petalist</h1>
-              <p>generate spotify playlist statistics and a bouquet to take with you</p>
+              <p>generate spotify playlist statistics (and some more features eventually)</p>
               <a
                 className="btn btn--loginApp-link"
                 href={`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join("%20")}&response_type=token&show_dialog=true`}
