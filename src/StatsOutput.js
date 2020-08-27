@@ -26,24 +26,31 @@ class StatsOutput extends Component {
     }
   }
 
-  storeTrackObjects(tracks){
+  storeTrackObjects(tracks, repeat){
     this.setState({
       track_objects: tracks
     })
     calls.getFeatures(this.props.token, this.state.track_objects, this.storeTrackFeatures)
   }
 
-  storeTrackFeatures(features){
+  storeTrackFeatures(features, repeat){
     this.setState({
       track_features: features
     })
-    this.storeStats();
+    this.storeStats(repeat);
   }
 
-  storeStats(){
-    this.setState({
-      stats: stats.iterate(this.state)
-    })
+  storeStats(repeat){
+    if (repeat) {
+      this.setState({
+        stats: stats.iterate(this.state)
+      })
+    }
+    else {
+      this.setState({
+        stats: stats.iterate(this.state)
+      })
+    }
   }
 
   getModeString() {
@@ -78,18 +85,19 @@ class StatsOutput extends Component {
         {this.state.stats && (
         <div id="infoContainer">
           <h3>{this.props.name}</h3>
+          <p>{this.state.stats.trackCount} tracks</p>
           <div id="graphContainer">
             <div className="graphBlock">
               <p>This playlist is <span className="bold">{this.getModeString()}</span> with <span className="bold">{this.state.stats.major} major song{this.state.stats.major !== 1 && "s"}</span> and <span className="bold">{this.state.track_objects.items.length - this.state.stats.major} minor song{this.state.track_objects.items.length - this.state.stats.major !== 1 && "s"}</span>.</p>
-              <ModeDoughnut id={this.props.bleh} major={this.state.stats.major} minor={this.state.stats.minor}/>
+              //<ModeDoughnut id={this.props.bleh} major={this.state.stats.major} minor={this.state.stats.minor}/>
             </div>
             <div className="graphBlock">
               <p>This playlist has songs in the following <span className="under">time signatures</span>: <span className="bold">{this.getTimeSigString()}</span>.</p>
-              <TimeSigDoughnut id={this.props.bleh} sigCount={this.state.stats.sigCount}/>
+              //<TimeSigDoughnut id={this.props.bleh} sigCount={this.state.stats.sigCount}/>
               <p className="explanation">"The time signature (meter) is a notational convention to specify how many beats are in each bar (or measure)."</p>
             </div>
             <div className="graphBlock">
-              <KeyDoughnut sigCount={this.state.stats.sigCount} id={this.props.bleh} data={this.state.stats.keyCount}/>
+              //<KeyDoughnut sigCount={this.state.stats.sigCount} id={this.props.bleh} data={this.state.stats.keyCount}/>
             </div>
           </div>
           <p>The average song duration is <span className="bold">{this.state.stats.avgDurationMin} minutes and {this.state.stats.avgDurationSec} seconds.</span></p>
@@ -97,6 +105,8 @@ class StatsOutput extends Component {
           <p className="explanation">"The popularity of a track is a value between 0 and 100, with 100 being the most popular. The popularity is calculated by algorithm and is based, in the most part, on the total number of plays the track has had and how recent those plays are."</p>
           <p>This playlist has an average <span className="under">valence</span> of <span className="bold">{this.state.stats.avgValence}</span>.</p>
           <p className="explanation">	Valence is "a measure from 0.0 to 1.0 describing the musical positiveness conveyed by a track. Tracks with high valence sound more positive (e.g. happy, cheerful, euphoric), while tracks with low valence sound more negative (e.g. sad, depressed, angry)."</p>
+          <p>danceability: {this.state.stats.danceability}</p>
+          <p>energy: {this.state.stats.energy}</p>
         </div>
         )}
       </div>

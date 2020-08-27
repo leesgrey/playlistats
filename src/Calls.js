@@ -22,7 +22,12 @@ export function getObjects(token, playlistId, callback) {
       }
     })
     .then((res) => {
-      callback(res.data)
+      if (res.data.next){
+        callback(res.data, true)
+      }
+      else {
+        callback(res.data, false)
+      }
     })
     .catch((error) => {
       console.error(error);

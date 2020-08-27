@@ -1,84 +1,58 @@
-export function iterate(stats){
-  let major = 0;
-  let minor = 0;
-  let popularityTotal = 0;
-  let mostPopular;
-  let mostPopularArtist;
-  let mostPopularNum = -1;
-  let leastPopular;
-  let leastPopularArtist;
-  let leastPopularNum = 101;
-  let valence = 0;
-  let duration = 0;
-  let timeSigs = []
-  let keys = []
+export function iterate(stats, previousData){
+  let datal
+  if (!previousData){
+
+  }
+  let data = previousData;
+
+  if (!data) {
+    data = {
+      popularityTotal: 0,
+      popularityMax: -1,
+      popularityMin: 101,
+
+      valenceTotal: 0,
+      danceabilityTotal: 0,
+      energyTotal: 0,
+      durationTotal: 0,
+
+      timeSigs: [],
+      keyModes: [],
+      modes: [],
+      keys: []
+    }
+  }
 
   stats.track_features.audio_features.forEach(function(track){
-    // time sig
-    timeSigs.push(track.time_signature)
+    data.valenceTotal += track.valence;
+    data.danceabilityTotal += track.danceability;
+    data.energyTotal += track.energy;
+    data.durationTotal += track.duration_ms;
 
-    // duration
-    duration += track.duration_ms
+    data.timeSigs.push(track.time_signature);
 
-    // valence
-    valence += track.valence
-
-    // key + mode tracking
-    if (track.mode){
-      keys.push(track.key.toString() + "+")
-      major++;
-    }
-    else {
-      keys.push(track.key.toString() + "-")
-      minor++;
-    }
+    data.keys.push(track.key)
+    data.keyModes.push(track.key.toString() + "+")
+    data.modes.push(track.mode)
   })
 
   stats.track_objects.items.forEach(function(item){
-    if (mostPopularNum < item.track.popularity) {
-      mostPopularNum = item.track.popularity
-      mostPopular = item.track.name
-      mostPopularArtist = item.track.artists[0].name
+    if (data.mostPopularNum < item.track.popularity) {
+      data.mostPopularNum = item.track.popularity
+      data.mostPopular = item.track
     }
 
-    if (leastPopularNum > item.track.popularity) {
-      leastPopularNum = item.track.popularity
-      leastPopular = item.track.name
-      leastPopularArtist = item.track.artists[0].name
+    if (data.leastPopularNum > item.track.popularity) {
+      data.leastPopularNum = item.track.popularity
+      data.leastPopular = item.track
     }
-    popularityTotal += item.track.popularity
+    data.popularityTotal += item.track.popularity
   })
-
-  let data = {
-    major: major,
-    minor: minor,
-    avgPopularity: Math.floor(popularityTotal / stats.track_features.audio_features.length),
-    mostPopular: mostPopular,
-    mostPopularArtist: mostPopularArtist,
-    leastPopular: leastPopular,
-    leastPopularArtist: leastPopularArtist,
-    avgDurationMin: Math.round(((duration / stats.track_features.audio_features.length) / 60000)),
-    avgDurationSec: Math.round((((duration / stats.track_features.audio_features.length) / 60000) % 1) * 60),
-    avgValence: (valence / stats.track_features.audio_features.length).toFixed(3),
-    timeSigs: [...new Set(timeSigs)],
-    sigCount: processArray(timeSigs),
-    uniqueKeys: [...new Set(keys.sort(function(a, b){return parseInt(a.slice(0, -1)) - parseInt(b.slice(0, -1))}))],
-    keyCount: processSortArray(keys)
-  }
   console.log(data)
   return data
 }
 
-function processSortArray(rawArray) {
-  let unique = [...new Set(rawArray)]
-  let keyCount = {}
-  unique.forEach(function(key){
-    keyCount[key] = rawArray.filter(x => x === key).length;
-  })
-  return keyCount;
-}
-
-function processArray(rawArray) {
+function arrayToDataset(rawArray) {
   let unique = [...new Set(rawArray)]
   let keyCount = {}
   unique.forEach(function(key){
