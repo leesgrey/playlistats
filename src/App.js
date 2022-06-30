@@ -8,8 +8,7 @@ export const authEndpoint = "https://accounts.spotify.com/authorize";
 
 const clientId = "308136625304484d92879d69e98ccd89";
 
-const redirectUri = "http://localhost:3000";
-//const redirectUri = "http://leesgrey.github.io/playlistats";
+const redirectUri = "http://leesgrey.github.io/playlistats";
 
 const scopes = [
   "ugc-image-upload",
@@ -52,8 +51,8 @@ class App extends Component {
         <header className="App-header">
           {!this.state.token && (
             <div id="landing">
-              <h1>petalist</h1>
-              <p>generate spotify playlist statistics (and some more features eventually)</p>
+              <h1>playlistats</h1>
+              <p>generate spotify playlist statistics (and some more features eventually maybe)</p>
               <a
                 className="btn btn--loginApp-link"
                 href={`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join("%20")}&response_type=token&show_dialog=true`}
@@ -65,7 +64,7 @@ class App extends Component {
           {this.state.token && (
             <div id="loginDisplay">
               <div id="header">
-                <h1>petalist</h1>
+                <h1>playlistats</h1>
               </div>
               <PlaylistSidebar token={this.state.token} playlists={this.state.playlists}/>
             </div>
