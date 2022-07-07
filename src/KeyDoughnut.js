@@ -1,7 +1,6 @@
 import { Doughnut } from 'react-chartjs-2';
 import React, { Component } from "react";
 
-
 let labelColors = {"0+": "#f9ddab",
                    "0-": "#FCF0DB",
                    "2+": "#f9a706",
@@ -71,9 +70,10 @@ class KeyDoughnut extends Component {
 
   getState(){
     return({
-      labels: Object.keys(this.props.data),
+      labels: (Object.keys(this.props.data).map(x => KEYNAMES[x])),
       datasets: [{
         data: Object.values(this.props.data),
+        backgroundColor: this.getColors(Object.keys(this.props.data))
       }]
     })
   }
@@ -106,6 +106,7 @@ class KeyDoughnut extends Component {
   }
 
   render() {
+    console.log(this.state.labels)
     return(
       <Doughnut data={this.state} key={this.props}/>
     )
