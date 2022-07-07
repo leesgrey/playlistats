@@ -1,7 +1,6 @@
 import { Doughnut } from 'react-chartjs-2';
 import React, { Component } from "react";
 
-
 class ModeDoughnut extends Component {
   constructor(props){
     super(props)
@@ -24,7 +23,6 @@ class ModeDoughnut extends Component {
       }]
     })
   }
-
 
   componentDidUpdate(prevProps) {
     if (this.props !== prevProps){

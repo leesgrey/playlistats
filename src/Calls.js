@@ -40,7 +40,6 @@ export function getObjects(token, playlistId, callback) {
     .catch((error) => {
       console.error(error);
     })
-
   }
 }
 

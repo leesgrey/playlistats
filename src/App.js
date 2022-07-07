@@ -8,7 +8,8 @@ export const authEndpoint = "https://accounts.spotify.com/authorize";
 
 const clientId = "308136625304484d92879d69e98ccd89";
 
-const redirectUri = "http://leesgrey.github.io/playlistats";
+// const redirectUri = "http://leesgrey.github.io/playlistats";
+const redirectUri = "http://localhost:3000";
 
 const scopes = [
   "ugc-image-upload",
