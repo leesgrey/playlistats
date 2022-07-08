@@ -106,7 +106,6 @@ class KeyDoughnut extends Component {
   }
 
   render() {
-    console.log(this.state.labels)
     return(
       <Doughnut data={this.state} key={this.props}/>
     )

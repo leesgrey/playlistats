@@ -24,6 +24,7 @@ class ModeDoughnut extends Component {
     })
   }
 
+
   componentDidUpdate(prevProps) {
     if (this.props !== prevProps){
       this.setState(this.getState())

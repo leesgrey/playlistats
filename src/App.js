@@ -8,6 +8,8 @@ export const authEndpoint = "https://accounts.spotify.com/authorize";
 
 const clientId = "308136625304484d92879d69e98ccd89";
 
+const PAGE_SIZE = 20;
+
 // const redirectUri = "http://leesgrey.github.io/playlistats";
 const redirectUri = "http://localhost:3000";
 
@@ -25,14 +27,21 @@ class App extends Component {
     this.state = {
       token: null,
       playlists: [],
-      no_data: false
+      previous: null,
+      next: null,
+      no_data: false,
+      pageNum: 0
     }
     this.setPlaylists = this.setPlaylists.bind(this);
+    this.onPrevious= this.onPrevious.bind(this);
+    this.onNext= this.onNext.bind(this);
   }
 
-  setPlaylists(data) {
+  setPlaylists(data, previous, next) {
     this.setState({
-      playlists: data
+      playlists: data,
+      previous: previous,
+      next: next
     })
   }
 
@@ -42,8 +51,25 @@ class App extends Component {
       this.setState({
         token: _token
       });
-    calls.getPlaylists(_token, this.setPlaylists);
+    calls.getPlaylists(_token, this.setPlaylists, PAGE_SIZE * this.state.pageNum);
     }
+  }
+
+  onNext() {
+    this.setState((prevState) => {
+      calls.getPlaylists(hash.access_token, this.setPlaylists, this.state.next);
+
+      return { pageNum: prevState.pageNum + 1 }
+    })
+  }
+
+  onPrevious() {
+    this.setState((prevState) => {
+      calls.getPlaylists(hash.access_token, this.setPlaylists, this.state.previous);
+
+      return { pageNum: prevState.pageNum + 0 }
+    })
+
   }
 
   render() {
@@ -64,10 +90,14 @@ class App extends Component {
           )}
           {this.state.token && (
             <div id="loginDisplay">
-              <div id="header">
-                <h1>playlistats</h1>
-              </div>
-              <PlaylistSidebar token={this.state.token} playlists={this.state.playlists}/>
+              <PlaylistSidebar
+                token={this.state.token}
+                playlists={this.state.playlists}
+                next={this.state.next}
+                previous={this.state.previous}
+                onNext={this.onNext}
+                onPrevious={this.onPrevious}
+              />
             </div>
           )}
         </header>

@@ -1,8 +1,9 @@
 body {
-  background-color: #1a1b41;
+  background-color: #0f111d;
   margin: 0;
   font-family: "Courier New", serif;
   color: #dddddd;
+  height: 100vh;
 }
 
 li {
@@ -17,7 +18,7 @@ li {
 }
 
 h1 {
-  color: #FC6471;
+  color: #d66767;
   font-size: 3.5em;
   margin: 0;
 }
@@ -28,43 +29,52 @@ h1 {
 }
 
 .sidebar {
-  width: 20vw;
+  width: 20rem;
   display: inline-block;
+  height: 100%;
+  position: fixed;
+  padding: 1rem;
+  box-sizing: border-box;
 }
 
 ul {
   list-style-position: inside;
   margin: 0;
   padding: 0;
-  overflow-y: scroll;
 }
 
 li {
   text-overflow: ellipsis;
   overflow-x: hidden;
   white-space: nowrap;
-  color: #ACFCD9;
+  color: rgb(236, 230, 225);
   cursor: pointer;
-  padding-left: 10px;
-  min-height: 1em;
-  height: 3vh;
+  min-height: 1.5em;
 }
 
 li:hover {
-  background-color: #55D6BE;
-  color: #1a1b41;
+  background-color: #d66767;
+  color: #0f111d;
 }
 
 a {
-  background-color: #55d6be;
+  color: #d66767;
+  cursor: pointer;
+  margin: 1rem;
+}
+
+.btn {
+  background-color: rgb(236, 230, 225);
   padding: 5px;
   text-decoration: none;
   color: #1a1b41;
   cursor: pointer;
+  transition: opacity 0.5s ease;
+  opacity: 1;
 }
 
 a:hover {
-  background-color: #ACFCD9;
+  opacity: 0.5;
 }
 
 .explanation {
@@ -91,5 +101,5 @@ canvas {
   display: inline-block;
   vertical-align: top;
   margin: 0 10px;
-  width: 75vw;
+  margin-left: 20rem;
 }

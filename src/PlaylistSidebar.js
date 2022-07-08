@@ -29,6 +29,8 @@ class PlaylistSidebar extends Component {
             <li onClick={() => this.handleClick(i.id, i.name)} className="playlist_item" key={i.id}>{i.name}</li>
             ))}
           </ul>
+          {this.props.previous && <a onClick={this.props.onPrevious}>{'<'} previous</a>}
+          {this.props.next && <a onClick={this.props.onNext}>next {'>'}</a>}
         </div>
         <StatsOutput token={this.state.token} name={this.state.name} bleh={this.state.selected}/>
       </div>

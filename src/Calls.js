@@ -1,13 +1,13 @@
 import axios from 'axios';
 
-export function getPlaylists(token, callback) {
-  axios.get('https://api.spotify.com/v1/me/playlists?limit=30', {
+export function getPlaylists(token, callback, pagLink) {
+  axios.get(pagLink || `https://api.spotify.com/v1/me/playlists`, {
     headers: {
       'Authorization': 'Bearer ' + token
     }
   })
   .then((res) => {
-    callback(res.data.items)
+    callback(res.data.items, res.data.previous, res.data.next)
   })
   .catch((error) => {
     console.error(error);

@@ -65,7 +65,6 @@ export function iterate(stats){
     uniqueKeys: [...new Set(keys.sort(function(a, b){return parseInt(a.slice(0, -1)) - parseInt(b.slice(0, -1))}))],
     keyCount: processSortArray(keys)
   }
-  console.log(data)
   return data
 }
 
