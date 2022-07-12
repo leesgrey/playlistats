@@ -29,7 +29,6 @@ class StatsOutput extends Component {
   }
 
   storeTrackObjects(tracks){
-    console.log(tracks);
     this.setState({
       track_objects: tracks
     })
