@@ -1,4 +1,8 @@
 export function iterate(stats){
+  if (!stats.track_objects.items.length) {
+    return null;
+  }
+
   let major = 0;
   let minor = 0;
   let popularityTotal = 0;

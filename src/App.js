@@ -10,8 +10,7 @@ const clientId = "308136625304484d92879d69e98ccd89";
 
 export const PAGE_SIZE = 50;
 
-// const redirectUri = "http://leesgrey.github.io/playlistats";
-const redirectUri = "http://localhost:3000";
+const redirectUri = "http://leesgrey.github.io/playlistats";
 
 const scopes = [
   "ugc-image-upload",

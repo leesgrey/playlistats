@@ -12,7 +12,8 @@ class StatsOutput extends Component {
     this.state = {
       track_objects: [],
       track_features: [],
-      stats: null
+      stats: null,
+      startup: true
     }
     this.storeTrackObjects = this.storeTrackObjects.bind(this);
     this.storeTrackFeatures = this.storeTrackFeatures.bind(this);
@@ -28,6 +29,7 @@ class StatsOutput extends Component {
   }
 
   storeTrackObjects(tracks){
+    console.log(tracks);
     this.setState({
       track_objects: tracks
     })
@@ -43,7 +45,8 @@ class StatsOutput extends Component {
 
   storeStats(){
     this.setState({
-      stats: stats.iterate(this.state)
+      stats: stats.iterate(this.state),
+      startup: false
     })
   }
 
@@ -86,7 +89,7 @@ class StatsOutput extends Component {
   render() {
     return(
       <div id="statsOutput">
-        {!this.state.stats && (<h3 id="select">{"< select a playlist to begin"}</h3>)}
+        {!this.state.stats && (<h3 id="select">{!!this.state.startup ? "< select a playlist to begin" : `${this.props.name} is empty :(`}</h3>)}
         {this.state.stats && (
         <div id="infoContainer">
           <h3>{this.props.name}</h3>
