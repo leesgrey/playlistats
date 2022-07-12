@@ -33,7 +33,7 @@ class ModeDoughnut extends Component {
 
   render() {
     return(
-      <Doughnut data={this.state} key={this.props.minor}/>
+      <Doughnut data={this.state} key={this.props.minor} options={{ legend: { position: 'right' } }} />
     )
   }
 }

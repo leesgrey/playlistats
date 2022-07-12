@@ -20,17 +20,24 @@ class PlaylistSidebar extends Component {
   }
 
   render() {
+    const { previous, onPrevious, next, onNext, pageNum } = this.props;
     return (
-      <div>
+      <div id="hasToken">
         <div className="sidebar">
+          <h2>playlistats</h2>
           <ul>
             <li onClick={() => this.handleClick(0, "Recently Played")} className="playlist_item" key={0}>Recently Played</li>
             {Array.from(this.props.playlists).map( i => (
             <li onClick={() => this.handleClick(i.id, i.name)} className="playlist_item" key={i.id}>{i.name}</li>
             ))}
           </ul>
-          {this.props.previous && <a onClick={this.props.onPrevious}>{'<'} previous</a>}
-          {this.props.next && <a onClick={this.props.onNext}>next {'>'}</a>}
+          <div id="footer">
+            <p id="pageCount">page {pageNum}</p>
+            <div id="pagination">
+              <a className={`pagBtn${previous ? ' active' : ''}`} onClick={onPrevious}>{'<'} previous</a>
+              <a className={`pagBtn${next ? ' active' : ''}`} onClick={onNext}>next {'>'}</a>
+            </div>
+          </div>
         </div>
         <StatsOutput token={this.state.token} name={this.state.name} bleh={this.state.selected}/>
       </div>

@@ -1,7 +1,7 @@
 import { Doughnut } from 'react-chartjs-2';
 import React, { Component } from "react";
 
-let labelColors = {"0+": "#f9ddab",
+export const labelColors = {"0+": "#f9ddab",
                    "0-": "#FCF0DB",
                    "2+": "#f9a706",
                    "2-": "#FAB938",
@@ -27,7 +27,7 @@ let labelColors = {"0+": "#f9ddab",
                    "10-": "#CBD518",
 }
 
-const KEYNAMES = {"0+": "C major",
+export const KEYNAMES = {"0+": "C major",
                   "0-": "C minor",
                   "1+": "C♯/D♭ major",
                   "1-": "C♯/D♭ minor",
@@ -107,7 +107,7 @@ class KeyDoughnut extends Component {
 
   render() {
     return(
-      <Doughnut data={this.state} key={this.props}/>
+      <Doughnut data={this.state} key={this.props} options={{ legend: { position: 'right' }}} />
     )
   }
 }

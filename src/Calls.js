@@ -1,7 +1,8 @@
 import axios from 'axios';
+import { PAGE_SIZE } from './App.js';
 
 export function getPlaylists(token, callback, pagLink) {
-  axios.get(pagLink || `https://api.spotify.com/v1/me/playlists`, {
+  axios.get(pagLink || `https://api.spotify.com/v1/me/playlists?limit=${PAGE_SIZE}`, {
     headers: {
       'Authorization': 'Bearer ' + token
     }

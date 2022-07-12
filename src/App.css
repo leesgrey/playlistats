@@ -1,9 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
+
+* {
+  margin: 0;
+}
+
 body {
   background-color: #0f111d;
-  margin: 0;
   font-family: "Courier New", serif;
-  color: #dddddd;
-  height: 100vh;
+  color: #ece6e1;
 }
 
 li {
@@ -11,70 +15,160 @@ li {
 }
 
 #landing {
-  width: 50%;
   margin: 0 auto;
-  margin-top: 50vh;
-  transform: translateY(-50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50rem;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 
 h1 {
   color: #d66767;
   font-size: 3.5em;
-  margin: 0;
+  font-family: Montserrat;
+  margin-bottom: 0.25rem;
 }
 
-#loginDisplay h1 {
-  font-size: 2.5em;
-  margin-left: 10px;
+.btn {
+  background-color: #a2f5b7;
+  font-family: 'Montserrat';
+  padding: 0.5rem;
+  text-decoration: none;
+  color: #0f111d;
+  cursor: pointer;
+  transition: background-color 0.5s ease;
+  margin-top: 1rem;
+  position: absolute;
+}
+
+.btn:hover {
+  background-color: #ece6e1;
 }
 
 .sidebar {
-  width: 20rem;
-  display: inline-block;
+  width: 16rem;
   height: 100%;
   position: fixed;
-  padding: 1rem;
-  box-sizing: border-box;
+  background-color: #1a1b41;
+  display: flex;
+  flex-direction: column;
+}
+
+h2 {
+  color: #d66767;
+  font-size: 2em;
+  font-family: Montserrat;
+  margin: 0.6rem auto;
 }
 
 ul {
   list-style-position: inside;
   margin: 0;
-  padding: 0;
+  overflow-y: scroll;
+  height: 100%;
+  background-color: #313264;
+  padding: 0.5rem 0;
 }
 
 li {
   text-overflow: ellipsis;
   overflow-x: hidden;
   white-space: nowrap;
-  color: rgb(236, 230, 225);
   cursor: pointer;
-  min-height: 1.5em;
+  padding: 0.16rem 1rem;
 }
 
 li:hover {
-  background-color: #d66767;
+  background-color: #424380;
+}
+
+#footer {
+  padding: 0.5rem 1rem;
+  background-color: #424380;
+  font-family: Montserrat;
+}
+
+#pagination {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.25rem;
+}
+
+.pagBtn {
   color: #0f111d;
+  cursor: not-allowed;
 }
 
-a {
-  color: #d66767;
+.active {
   cursor: pointer;
-  margin: 1rem;
+  color: #a2f5b7;
 }
 
-.btn {
-  background-color: rgb(236, 230, 225);
-  padding: 5px;
-  text-decoration: none;
-  color: #1a1b41;
-  cursor: pointer;
-  transition: opacity 0.5s ease;
-  opacity: 1;
+#pageCount {
+  text-align: center;
 }
 
-a:hover {
-  opacity: 0.5;
+#hasToken {
+  display: flex;
+}
+
+#statsOutput {
+  vertical-align: top;
+  margin-left: 16rem;
+  height: 100vh;
+  padding: 1rem;
+  box-sizing: border-box;
+  flex-grow: 1;
+}
+
+h3 {
+  font-size: 3rem;
+  font-family: 'Montserrat';
+}
+
+#select { 
+  text-align: center;
+  margin-top: 48vh;
+}
+
+.graphBlock {
+  background-color: #313264;
+  border-radius: 1rem;
+  padding: 1rem;
+  overflow: hidden;
+  word-wrap: break-word;
+  flex-grow: 1;
+  width: 25rem;
+}
+
+.chartLabel {
+  margin-bottom: 1rem;
+}
+
+.stat {
+  margin-bottom: 1rem;
+}
+
+#numStats {
+  background-color: #313264;
+  border-radius: 1rem;
+  padding: 1rem 1rem 0.5rem;
+}
+
+#statsContainer { 
+  background-color: #1a1b41;
+  border-radius: 1rem;
+  padding: 1rem;
+  margin: 0.75rem 0 1.5rem;
+}
+
+#graphContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
 }
 
 .explanation {
@@ -82,9 +176,6 @@ a:hover {
   font-style: italic;
 }
 
-canvas {
-  width: 200px;
-}
 .bold {
   font-weight: bold;
 }
@@ -95,11 +186,4 @@ canvas {
 
 .under {
   text-decoration: underline;
-}
-
-#statsOutput {
-  display: inline-block;
-  vertical-align: top;
-  margin: 0 10px;
-  margin-left: 20rem;
 }

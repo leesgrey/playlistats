@@ -55,7 +55,7 @@ class TimeSigDoughnut extends Component {
 
   render() {
     return(
-      <Doughnut data={this.state} key={this.props}/>
+      <Doughnut data={this.state} key={this.props} options={{ legend: { position: 'right', labels: { color: 'white' } }}} />
     )
   }
 }
