@@ -42,7 +42,12 @@ class CustomGraph extends Component {
     super(props)
     this.state = {
       datasets: [{
-        data: []
+        data: this.props.customX.map((x, idx) => (
+          {
+            x: x || 0,
+            y: this.props.customY[idx] || 0
+          }
+        ))
       }]
     }
   }
