@@ -31,6 +31,10 @@ h1 {
   margin-bottom: 0.25rem;
 }
 
+.full {
+  flex: 0 0 calc(100% - 2rem);
+}
+
 .btn {
   background-color: #a2f5b7;
   font-family: 'Montserrat';
