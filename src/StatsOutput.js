@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import * as calls from './Calls.js';
 import * as stats from './Stats.js';
-import ModeDoughnut from './ModeDoughnut.js';
-import TimeSigDoughnut from './TimeSigDoughnut.js';
-import KeyDoughnut from './KeyDoughnut.js';
-import CustomGraph from './CustomGraph.js';
-import { KEYNAMES } from "./KeyDoughnut.js";
+import ModeDoughnut from './charts/ModeDoughnut.js';
+import TimeSigDoughnut from './charts/TimeSigDoughnut.js';
+import KeyDoughnut from './charts/KeyDoughnut.js';
+import CustomGraph from './charts/CustomGraph.js';
+import { KEYNAMES } from "./charts/KeyDoughnut.js";
 
 class StatsOutput extends Component {
   constructor(props) {
@@ -102,7 +102,9 @@ class StatsOutput extends Component {
         {!this.state.stats ?
           <h3 id="select">{!!this.state.startup ? "< select a playlist to begin" : `${this.props.name} is empty :(`}</h3>
           : <div id="infoContainer">
-              <h3>{this.props.name}</h3>
+              <div id="header">
+                <h3>{this.props.name}</h3>
+              </div>
               <div id="statsContainer">
                 <div id="graphContainer">
                   <div className="graphBlock">

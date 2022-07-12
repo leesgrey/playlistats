@@ -130,6 +130,12 @@ li:hover {
 h3 {
   font-size: 3rem;
   font-family: 'Montserrat';
+  margin: 0.25rem 2rem 0;
+}
+
+#header {
+  background-color: #0f111d;
+  width: 100%;
 }
 
 #select { 

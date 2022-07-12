@@ -26,7 +26,7 @@ class PlaylistSidebar extends Component {
         <div className="sidebar">
           <h2>playlistats</h2>
           <ul>
-            <li onClick={() => this.handleClick(0, "Recently Played")} className="playlist_item" key={0}>Recently Played</li>
+            <li onClick={() => this.handleClick(0, "Recently Played")} key={0}>Recently Played</li>
             {Array.from(this.props.playlists).map( i => (
             <li onClick={() => this.handleClick(i.id, i.name)} className="playlist_item" key={i.id}>{i.name}</li>
             ))}
