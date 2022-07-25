@@ -31,10 +31,6 @@ h1 {
   margin-bottom: 0.25rem;
 }
 
-.full {
-  flex: 0 0 calc(100% - 2rem);
-}
-
 .btn {
   background-color: #a2f5b7;
   font-family: 'Montserrat';
@@ -64,7 +60,7 @@ h2 {
   color: #d66767;
   font-size: 2em;
   font-family: Montserrat;
-  margin: 0.6rem auto;
+  margin: 1rem auto;
 }
 
 ul {
@@ -134,8 +130,12 @@ h3 {
 }
 
 #header {
-  background-color: #0f111d;
+  background-color: rgba(15, 17, 29, 0.8);
   width: 100%;
+  position: fixed;
+  top: 0;
+  left: 16rem;
+  padding-bottom: 0.5rem;
 }
 
 #select { 
@@ -152,6 +152,12 @@ h3 {
   flex-grow: 1;
   width: 25rem;
 }
+
+.full {
+  flex-grow: 2;
+  width: 45rem;
+}
+
 
 .chartLabel {
   margin-bottom: 1rem;
@@ -171,7 +177,7 @@ h3 {
   background-color: #1a1b41;
   border-radius: 1rem;
   padding: 1rem;
-  margin: 0.75rem 0 1.5rem;
+  margin: 4.5rem 0 1.5rem;
 }
 
 #graphContainer {
