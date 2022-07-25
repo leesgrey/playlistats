@@ -40,6 +40,7 @@ class GenreDoughnut extends Component {
   }
 
   render() {
+    console.log(Object.keys(this.props.genres))
     return (
       <Doughnut
         data={this.state}

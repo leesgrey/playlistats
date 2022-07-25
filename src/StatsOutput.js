@@ -62,7 +62,8 @@ class StatsOutput extends Component {
   storeGenres() {
     const genres = []
     const artists = this.state.track_objects.items.map((t) => t.track.artists[0])
-    artists.map(artist => calls.getArtistGenres(this.props.token, artist.href, (newGenres) => genres.push(newGenres)))
+    artists.forEach(artist => calls.getArtistGenres(this.props.token, artist.href, (newGenres) => newGenres && genres.push(newGenres)))
+    console.log(genres)
     this.setState({
       genres: genres
     })
@@ -143,8 +144,13 @@ class StatsOutput extends Component {
                     <KeyDoughnut sigCount={this.state.stats.sigCount} id={this.props.bleh} data={this.state.stats.keyCount}/>
                   </div>
                   <div className="graphBlock full">
-                    <p className="chartLabel">This playlist has artists associated with the following <span className="under">genres</span>: <span className="bold">{this.getGenreString()}</span></p>
-                    <GenreDoughnut genres={this.state.stats.genres} />
+                    {this.state.genres.length > 0 ?
+                      <React.Fragment>
+                        <p className="chartLabel">This playlist has artists associated with the following <span className="under">genres</span>: <span className="bold">{this.getGenreString()}</span></p>
+                        <GenreDoughnut genres={this.state.stats.genres} />
+                      </React.Fragment> : 
+                      <p className="chartLabel">This playlist has no artists with associated genres :(</p>
+                    }
                   </div>
                   <div className="graphBlock">
                     <p className="stat">The average song duration is <span className="bold">{this.state.stats.avgDurationMin} minutes and {this.state.stats.avgDurationSec} seconds.</span></p>
