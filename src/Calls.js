@@ -70,3 +70,18 @@ export function getFeatures(token, objects, callback) {
     console.error(error)
   })
 }
+
+
+export function getArtistGenres(token, artistEndpoint, callback) {
+  axios.get(artistEndpoint, {
+    headers: {
+      'Authorization': 'Bearer ' + token
+    }
+  })
+  .then((res) => {
+    callback(...res.data.genres)
+  })
+  .catch((error) => {
+    console.error(error)
+  })
+}

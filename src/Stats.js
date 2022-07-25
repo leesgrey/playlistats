@@ -67,18 +67,10 @@ export function iterate(stats){
     timeSigs: [...new Set(timeSigs)],
     sigCount: processArray(timeSigs),
     uniqueKeys: [...new Set(keys.sort(function(a, b){return parseInt(a.slice(0, -1)) - parseInt(b.slice(0, -1))}))],
-    keyCount: processSortArray(keys)
+    keyCount: processArray(keys),
+    genres: processArray(stats.genres)
   }
   return data
-}
-
-function processSortArray(rawArray) {
-  let unique = [...new Set(rawArray)]
-  let keyCount = {}
-  unique.forEach(function(key){
-    keyCount[key] = rawArray.filter(x => x === key).length;
-  })
-  return keyCount;
 }
 
 function processArray(rawArray) {

@@ -5,6 +5,7 @@ import ModeDoughnut from './charts/ModeDoughnut.js';
 import TimeSigDoughnut from './charts/TimeSigDoughnut.js';
 import KeyDoughnut from './charts/KeyDoughnut.js';
 import CustomGraph from './charts/CustomGraph.js';
+import GenreDoughnut from './charts/GenreDoughnut';
 import { KEYNAMES } from "./charts/KeyDoughnut.js";
 
 class StatsOutput extends Component {
@@ -14,6 +15,7 @@ class StatsOutput extends Component {
       track_objects: [],
       track_features: [],
       stats: null,
+      genres: [],
       startup: true,
       customX: null,
       customY: null,
@@ -22,7 +24,9 @@ class StatsOutput extends Component {
     this.storeTrackObjects = this.storeTrackObjects.bind(this);
     this.storeTrackFeatures = this.storeTrackFeatures.bind(this);
     this.storeStats = this.storeStats.bind(this);
+    this.storeGenres= this.storeGenres.bind(this);
     this.getModeString = this.getModeString.bind(this);
+    this.getGenreString = this.getGenreString.bind(this);
     this.getTimeSigString = this.getTimeSigString.bind(this)
     this.getCustomTitle= this.getCustomTitle.bind(this)
   }
@@ -37,6 +41,7 @@ class StatsOutput extends Component {
     this.setState({
       track_objects: tracks
     })
+    this.storeGenres();
     calls.getFeatures(this.props.token, this.state.track_objects, this.storeTrackFeatures)
   }
 
@@ -51,6 +56,15 @@ class StatsOutput extends Component {
     this.setState({
       stats: stats.iterate(this.state),
       startup: false
+    })
+  }
+
+  storeGenres() {
+    const genres = []
+    const artists = this.state.track_objects.items.map((t) => t.track.artists[0])
+    artists.map(artist => calls.getArtistGenres(this.props.token, artist.href, (newGenres) => genres.push(newGenres)))
+    this.setState({
+      genres: genres
     })
   }
 
@@ -90,6 +104,15 @@ class StatsOutput extends Component {
     return result;
   }
 
+  getGenreString() {
+    let result = "";
+    Object.keys(this.state.stats.genres).forEach((genre) => {
+      result += genre
+      result += ", "
+    });
+    return result.slice(0, -2)
+  }
+
   getCustomTitle() {
     const {customX, customY} = this.state;
     if (!customX && !customY) return "Custom Chart";
@@ -116,8 +139,12 @@ class StatsOutput extends Component {
                     <TimeSigDoughnut id={this.props.bleh} sigCount={this.state.stats.sigCount}/>
                   </div>
                   <div className="graphBlock full">
-                    <p className="chartLabel">This playlist is has songs in the following <span className="under">keys</span>: <span className="bold">{this.getKeyString()}</span></p>
+                    <p className="chartLabel">This playlist has songs in the following <span className="under">keys</span>: <span className="bold">{this.getKeyString()}</span></p>
                     <KeyDoughnut sigCount={this.state.stats.sigCount} id={this.props.bleh} data={this.state.stats.keyCount}/>
+                  </div>
+                  <div className="graphBlock full">
+                    <p className="chartLabel">This playlist has artists associated with the following <span className="under">genres</span>: <span className="bold">{this.getGenreString()}</span></p>
+                    <GenreDoughnut genres={this.state.stats.genres} />
                   </div>
                   <div className="graphBlock">
                     <p className="stat">The average song duration is <span className="bold">{this.state.stats.avgDurationMin} minutes and {this.state.stats.avgDurationSec} seconds.</span></p>
