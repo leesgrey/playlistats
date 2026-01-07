@@ -1,23 +1,24 @@
-import React, { Component } from 'react';
-import PlaylistSidebar from "./PlaylistSidebar"
+import React, { Component } from "react";
+import PlaylistSidebar from "./PlaylistSidebar";
 import hash from "./hash";
-import './App.css';
-import * as calls from "./Calls.js"
+import "./App.css";
+import * as calls from "./Calls.js";
 
+// auth
 export const authEndpoint = "https://accounts.spotify.com/authorize";
 
+//const redirectUri = "https://leesgrey.github.io/playlistats";
+const redirectUri = "http://127.0.0.1:3000";
+
 const clientId = "308136625304484d92879d69e98ccd89";
-
-export const PAGE_SIZE = 50;
-
-//const redirectUri = "http://leesgrey.github.io/playlistats";
-const redirectUri = "http://localhost:3000";
 
 const scopes = [
   "user-read-recently-played",
   "playlist-read-collaborative",
-  "playlist-read-private"
-]
+  "playlist-read-private",
+];
+
+export const PAGE_SIZE = 50;
 
 class App extends Component {
   constructor() {
@@ -28,28 +29,32 @@ class App extends Component {
       previous: null,
       next: null,
       no_data: false,
-      pageNum: 0
-    }
+      pageNum: 0,
+    };
     this.setPlaylists = this.setPlaylists.bind(this);
-    this.onPrevious= this.onPrevious.bind(this);
-    this.onNext= this.onNext.bind(this);
+    this.onPrevious = this.onPrevious.bind(this);
+    this.onNext = this.onNext.bind(this);
   }
 
   setPlaylists(data, previous, next) {
     this.setState({
       playlists: data,
       previous: previous,
-      next: next
-    })
+      next: next,
+    });
   }
 
   componentDidMount() {
     let _token = hash.access_token;
     if (_token) {
       this.setState({
-        token: _token
+        token: _token,
       });
-    calls.getPlaylists(_token, this.setPlaylists, PAGE_SIZE * this.state.pageNum);
+      calls.getPlaylists(
+        _token,
+        this.setPlaylists,
+        PAGE_SIZE * this.state.pageNum
+      );
     }
   }
 
@@ -57,24 +62,27 @@ class App extends Component {
     this.setState((prevState) => {
       calls.getPlaylists(hash.access_token, this.setPlaylists, this.state.next);
 
-      return { pageNum: prevState.pageNum + 1 }
-    })
+      return { pageNum: prevState.pageNum + 1 };
+    });
   }
 
   onPrevious() {
     this.setState((prevState) => {
-      calls.getPlaylists(hash.access_token, this.setPlaylists, this.state.previous);
+      calls.getPlaylists(
+        hash.access_token,
+        this.setPlaylists,
+        this.state.previous
+      );
 
-      return { pageNum: prevState.pageNum - 1 }
-    })
-
+      return { pageNum: prevState.pageNum - 1 };
+    });
   }
 
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          {this.state.token ? 
+          {this.state.token ? (
             <div id="loginDisplay">
               <PlaylistSidebar
                 token={this.state.token}
@@ -85,21 +93,24 @@ class App extends Component {
                 onPrevious={this.onPrevious}
                 pageNum={this.state.pageNum + 1}
               />
-            </div> :
+            </div>
+          ) : (
             <div id="landing">
-              <h1>playlistats</h1>
-              <p>generate spotify playlist statistics (and some more features eventually maybe)</p>
+              <h1>Playlistats</h1>
+              <p>generate spotify playlist statistics</p>
               <a
                 className="btn btn--loginApp-link"
-                href={`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join("%20")}&response_type=token&show_dialog=true`}
-                >
+                href={`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join(
+                  "%20"
+                )}&response_type=token&show_dialog=true`}
+              >
                 log into spotify
               </a>
             </div>
-          }
+          )}
         </header>
       </div>
-    )
+    );
   }
 }
 
