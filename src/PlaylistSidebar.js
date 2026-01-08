@@ -1,6 +1,6 @@
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import React, { Component } from "react";
-import StatsOutput from "./StatsOutput.js"
-
+import StatsOutput from "./StatsOutput.js";
 class PlaylistSidebar extends Component {
   constructor(props) {
     super(props);
@@ -8,41 +8,78 @@ class PlaylistSidebar extends Component {
       selected: null,
       token: this.props.token,
       no_data: false,
-    }
+    };
     this.handleClick = this.handleClick.bind(this);
   }
-
   handleClick(id, name) {
     this.setState({
       selected: id,
-      name: name
-    })
+      name: name,
+    });
   }
-
   render() {
     const { previous, onPrevious, next, onNext, pageNum } = this.props;
-    return (
-      <div id="hasToken">
-        <div className="sidebar">
-          <h2>playlistats</h2>
-          <ul>
-            <li onClick={() => this.handleClick(0, "Recently Played")} key={0}>Recently Played</li>
-            {Array.from(this.props.playlists).map( i => (
-            <li onClick={() => this.handleClick(i.id, i.name)} className="playlist_item" key={i.id}>{i.name}</li>
-            ))}
-          </ul>
-          <div id="footer">
-            <p id="pageCount">page {pageNum}</p>
-            <div id="pagination">
-              <a className={`pagBtn${previous ? ' active' : ''}`} onClick={onPrevious}>{'<'} previous</a>
-              <a className={`pagBtn${next ? ' active' : ''}`} onClick={onNext}>next {'>'}</a>
-            </div>
-          </div>
-        </div>
-        <StatsOutput token={this.state.token} name={this.state.name} bleh={this.state.selected}/>
-      </div>
-    )
+    return _jsxs("div", {
+      id: "hasToken",
+      children: [
+        _jsxs("div", {
+          className: "sidebar",
+          children: [
+            _jsx("h2", { children: "playlistats" }),
+            _jsxs("ul", {
+              children: [
+                _jsx(
+                  "li",
+                  {
+                    onClick: () => this.handleClick(0, "Recently Played"),
+                    children: "Recently Played",
+                  },
+                  0
+                ),
+                Array.from(this.props.playlists).map((i) =>
+                  _jsx(
+                    "li",
+                    {
+                      onClick: () => this.handleClick(i.id, i.name),
+                      className: "playlist_item",
+                      children: i.name,
+                    },
+                    i.id
+                  )
+                ),
+              ],
+            }),
+            _jsxs("div", {
+              id: "footer",
+              children: [
+                _jsxs("p", { id: "pageCount", children: ["page ", pageNum] }),
+                _jsxs("div", {
+                  id: "pagination",
+                  children: [
+                    _jsxs("a", {
+                      className: `pagBtn${previous ? " active" : ""}`,
+                      onClick: onPrevious,
+                      children: ["<", " previous"],
+                    }),
+                    _jsxs("a", {
+                      className: `pagBtn${next ? " active" : ""}`,
+                      onClick: onNext,
+                      children: ["next ", ">"],
+                    }),
+                  ],
+                }),
+              ],
+            }),
+          ],
+        }),
+        _jsx(StatsOutput, {
+          token: this.state.token,
+          name: this.state.name,
+          playlist_id: this.state.selected,
+        }),
+      ],
+    });
   }
 }
-
 export default PlaylistSidebar;
+//# sourceMappingURL=PlaylistSidebar.js.map

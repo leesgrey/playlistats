@@ -1,6 +1,7 @@
 {
   "name": "playlistats",
   "version": "0.1.0",
+  "type": "module",
   "private": true,
   "homepage": "http://leesgrey.github.io/playlistats",
   "dependencies": {
@@ -8,7 +9,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "axios": "^1.13.2",
-    "chart.js": "^2.9.4",
+    "chart.js": "^4.5.1",
     "create-react-class": "^15.7.0",
     "jquery": "^3.5.1",
     "react": "^16.13.1",
@@ -16,10 +17,9 @@
     "react-dom": "^16.13.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
@@ -39,7 +39,14 @@
     ]
   },
   "devDependencies": {
+    "@types/chart.js": "^2.9.41",
+    "@types/css-modules": "^1.0.5",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.2",
     "gh-pages": "^6.3.0",
-    "react-scripts": "^5.0.1"
+    "jsx-runtime": "^1.2.0",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.1"
   }
 }
