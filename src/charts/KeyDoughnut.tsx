@@ -1,7 +1,7 @@
 import { Doughnut } from "react-chartjs-2";
-import React, { Component } from "react";
+import { useMemo } from "react";
 
-export const labelColors = {
+export const labelColors: Record<string, string> = {
   "0+": "#f9ddab",
   "0-": "#FCF0DB",
   "2+": "#f9a706",
@@ -55,80 +55,44 @@ export const KEYNAMES: Record<string, string> = {
   "11-": "B minor",
 };
 
-class KeyDoughnut extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      labels: Object.keys(this.props.data).map((x) => KEYNAMES[x]),
-      datasets: [
-        {
-          data: Object.values(this.props.data),
-          backgroundColor: this.getColors(Object.keys(this.props.data)),
-        },
-      ],
-    };
-    this.getState = this.getState.bind(this);
-    this.getColors = this.getColors.bind(this);
-    this.getModeColors = this.getModeColors.bind(this);
-  }
+type KeyDoughnutProps = {
+  data: Record<string, number>;
+};
 
-  getState() {
+const KeyDoughnut = ({ data }: KeyDoughnutProps) => {
+  const getColors = (labels: string[]) => {
+    return labels.map((sig) => labelColors[sig]);
+  };
+
+  const chartData = useMemo(() => {
+    const keys = Object.keys(data);
+
     return {
-      labels: Object.keys(this.props.data).map((x) => KEYNAMES[x]),
+      labels: keys.map((k) => KEYNAMES[k]),
       datasets: [
         {
-          data: Object.values(this.props.data),
-          backgroundColor: this.getColors(Object.keys(this.props.data)),
+          data: Object.values(data),
+          backgroundColor: getColors(keys),
         },
       ],
     };
-  }
+  }, [data]);
 
-  getColors(labels) {
-    let colors = [];
-    labels.forEach(function (sig) {
-      colors.push(labelColors[sig]);
-    });
-    return colors;
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.props !== prevProps) {
-      this.setState(this.getState());
-    }
-  }
-
-  getModeColors(labels) {
-    let colors = [];
-    labels.forEach(function (sig) {
-      if (labelColors[sig]) {
-        colors.push(labelColors[sig]);
-      } else {
-        colors.push(
-          "rgba(" +
-            Math.floor(Math.random() * 255).toString() +
-            ", " +
-            Math.floor(Math.random() * 255).toString() +
-            ", " +
-            Math.floor(Math.random() * 255).toString() +
-            ")"
-        );
-      }
-    });
-    return colors;
-  }
-
-  render() {
-    return (
-      <Doughnut
-        data={this.state}
-        key={this.props}
-        options={{
-          legend: { position: "right", labels: { fontColor: "#ece6e1" } },
-        }}
-      />
-    );
-  }
-}
+  return (
+    <Doughnut
+      data={chartData}
+      options={{
+        plugins: {
+          legend: {
+            position: "right",
+            labels: {
+              color: "#ece6e1",
+            },
+          },
+        },
+      }}
+    />
+  );
+};
 
 export default KeyDoughnut;

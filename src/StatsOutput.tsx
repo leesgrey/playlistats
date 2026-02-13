@@ -22,7 +22,7 @@ interface StatsOutputProps {
 
 const StatsOutput = ({ token, name, playlist_id }: StatsOutputProps) => {
   const [trackObjects, setTrackObjects] = useState<SpotifyTrackResponse | null>(
-    null
+    null,
   );
   const [trackFeatures, setTrackFeatures] =
     useState<AudioFeatureResponse | null>(null);
@@ -126,9 +126,7 @@ const StatsOutput = ({ token, name, playlist_id }: StatsOutputProps) => {
                   .
                 </p>
                 <ModeDoughnut
-                  id={playlist_id}
-                  major={stats.major}
-                  minor={stats.minor}
+                  modes={{ major: stats.major, minor: stats.minor }}
                 />
               </div>
               <div className="graphBlock">
@@ -137,7 +135,7 @@ const StatsOutput = ({ token, name, playlist_id }: StatsOutputProps) => {
                   <span className="under">time signatures</span>:{" "}
                   <span className="bold">{getTimeSigString()}</span>.
                 </p>
-                <TimeSigDoughnut id={playlist_id} sigCount={stats.sigCount} />
+                <TimeSigDoughnut sigCount={stats.sigCount} />
               </div>
               <div className="graphBlock full">
                 <p className="chartLabel">
@@ -145,11 +143,7 @@ const StatsOutput = ({ token, name, playlist_id }: StatsOutputProps) => {
                   <span className="under">keys</span>:{" "}
                   <span className="bold">{getKeyString()}</span>
                 </p>
-                <KeyDoughnut
-                  sigCount={stats.sigCount}
-                  id={playlist_id}
-                  data={stats.keyCount}
-                />
+                <KeyDoughnut data={stats.keyCount} />
               </div>
               <div className="graphBlock full">
                 {genres.length > 0 ? (
@@ -253,15 +247,24 @@ const StatsOutput = ({ token, name, playlist_id }: StatsOutputProps) => {
                 </div>
                 <CustomGraph
                   id={playlist_id}
-                  customX={trackFeatures?.audio_features.map(
-                    (i: AudioFeature) => i && i[customX]
-                  )}
-                  customY={trackFeatures?.audio_features.map(
-                    (i: any) => i && i[customY]
-                  )}
-                  labels={trackObjects?.items.map(
-                    (i: any) => `${i.track.name} - ${i.track.artists[0].name}`
-                  )}
+                  customX={
+                    trackFeatures?.audio_features.map(
+                      (i: AudioFeature | null) =>
+                        i ? (i[customX as keyof AudioFeature] as number) : null,
+                    ) ?? []
+                  }
+                  customY={
+                    trackFeatures?.audio_features.map(
+                      (i: AudioFeature | null) =>
+                        i ? (i[customY as keyof AudioFeature] as number) : null,
+                    ) ?? []
+                  }
+                  labels={
+                    trackObjects?.items.map(
+                      (i: any) =>
+                        `${i.track.name} - ${i.track.artists[0].name}`,
+                    ) ?? []
+                  }
                   xLabel={customX}
                   yLabel={customY}
                 />

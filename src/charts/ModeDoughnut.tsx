@@ -1,41 +1,41 @@
-import { Doughnut } from 'react-chartjs-2';
-import React, { Component } from "react";
+import { Doughnut } from "react-chartjs-2";
+import { useMemo } from "react";
 
-class ModeDoughnut extends Component {
-  constructor(props){
-    super(props)
-    this.state = {
-      labels: ['major', 'minor'],
-      datasets: [{
-        data: [this.props.major, this.props.minor],
-        backgroundColor: ['#FF6384', '#36A2EB']
-      }]
-    }
-    this.getState = this.getState.bind(this);
-  }
+type ModeDoughnutProps = {
+  modes: {
+    major: number;
+    minor: number;
+  };
+};
 
-  getState(){
-    return({
-      labels: ['major', 'minor'],
-      datasets: [{
-        data: [this.props.major, this.props.minor],
-        backgroundColor: ['#FF6384', '#36A2EB']
-      }]
-    })
-  }
+const ModeDoughnut = ({ modes }: ModeDoughnutProps) => {
+  const chartData = useMemo(() => {
+    return {
+      labels: ["major", "minor"],
+      datasets: [
+        {
+          data: [modes.major, modes.minor],
+          backgroundColor: ["#FF6384", "#36A2EB"],
+        },
+      ],
+    };
+  }, [modes]);
 
-
-  componentDidUpdate(prevProps) {
-    if (this.props !== prevProps){
-      this.setState(this.getState())
-    }
-  }
-
-  render() {
-    return(
-      <Doughnut data={this.state} key={this.props.minor} options={{ legend: { position: 'right', labels: { fontColor: '#ece6e1' }}}} />
-    )
-  }
-}
+  return (
+    <Doughnut
+      data={chartData}
+      options={{
+        plugins: {
+          legend: {
+            position: "right",
+            labels: {
+              color: "#ece6e1",
+            },
+          },
+        },
+      }}
+    />
+  );
+};
 
 export default ModeDoughnut;

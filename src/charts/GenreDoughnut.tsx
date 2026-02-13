@@ -1,54 +1,49 @@
-import { Doughnut } from 'react-chartjs-2';
-import React, { Component } from "react";
+import { Doughnut } from "react-chartjs-2";
+import { useMemo } from "react";
 
-class GenreDoughnut extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      labels: Object.keys(this.props.genres),
-      datasets: [{
-        data: Object.values(this.props.genres),
-        backgroundColor: this.getColors(Object.keys(this.props.genres))
-      }]
-    }
-  this.getState = this.getState.bind(this);
-  this.getColors = this.getColors.bind(this);
-  }
+type GenreDoughnutProps = {
+  genres: Record<string, number>;
+};
 
-  getState(){
-    return({
-      labels: Object.keys(this.props.genres),
-      datasets: [{
-        data: Object.values(this.props.genres),
-        backgroundColor: this.getColors(Object.keys(this.props.genres))
-      }]
-    })
-  }
+const GenreDoughnut = ({ genres }: GenreDoughnutProps) => {
+  const data = useMemo(() => {
+    const labels = Object.keys(genres);
 
-  componentDidUpdate(prevProps) {
-    if (this.props !== prevProps){
-      this.setState(this.getState())
-    }
-  }
+    return {
+      labels,
+      datasets: [
+        {
+          data: Object.values(genres),
+          backgroundColor: getColors(labels),
+        },
+      ],
+    };
+  }, [genres]);
 
-  getColors(genres) {
-    let colors = []
-    genres.forEach(() => {
-      colors.push('rgba(' + Math.floor(Math.random() * 255).toString() + ', ' + Math.floor(Math.random() * 255).toString() + ', ' + Math.floor(Math.random() * 255).toString() + ')')
-    })
-    return colors;
-  }
+  const getColors = (genreKeys: string[]) => {
+    return genreKeys.map(() => {
+      const r = Math.floor(Math.random() * 255);
+      const g = Math.floor(Math.random() * 255);
+      const b = Math.floor(Math.random() * 255);
+      return `rgba(${r}, ${g}, ${b})`;
+    });
+  };
 
-  render() {
-    console.log(Object.keys(this.props.genres))
-    return (
-      <Doughnut
-        data={this.state}
-        key={this.props}
-        options={{ legend: { position: 'right', labels: { fontColor: '#ece6e1' }}}}
-      />
-    )
-  }
-}
+  return (
+    <Doughnut
+      data={data}
+      options={{
+        plugins: {
+          legend: {
+            position: "right",
+            labels: {
+              color: "#ece6e1",
+            },
+          },
+        },
+      }}
+    />
+  );
+};
 
 export default GenreDoughnut;
