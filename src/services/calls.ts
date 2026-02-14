@@ -1,11 +1,9 @@
 import axios from "axios";
-import { PAGE_SIZE } from "../utils/constants";
-import type { Playlist } from "../types";
+import { PAGE_SIZE } from "utils/constants";
+import type { Playlist } from "types";
+import { clientId, redirectUri } from "utils/constants";
 
 const tokenEndpoint = "https://accounts.spotify.com/api/token";
-const clientId = "308136625304484d92879d69e98ccd89";
-//const redirectUri = "https://leesgrey.github.io/playlistats";
-const redirectUri = "http://127.0.0.1:3000";
 
 export interface SpotifyTrack {
   track: {

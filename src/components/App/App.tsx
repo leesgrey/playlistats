@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react";
 import "./App.css";
+import Login from "../Login/Login";
 import * as calls from "../../services/calls";
 import type { TokenResponse } from "../../types";
-import { PAGE_SIZE } from "../../utils/constants";
+// import { PAGE_SIZE } from "../../utils/constants";
 
 function App() {
   const [token, setToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Helper to save token to localStorage
+  // Save token data to localStorage
   const saveToken = (response: TokenResponse) => {
     const { access_token, refresh_token, expires_in } = response;
     localStorage.setItem("access_token", access_token);
@@ -24,7 +25,7 @@ function App() {
   // Handle token exchange on mount
   useEffect(() => {
     const handleAuth = async () => {
-      // Check if we're in a callback with a code
+      // Check if we're in auth callback with a code
       const args = new URLSearchParams(window.location.search);
       const code = args.get("code");
 
@@ -34,7 +35,7 @@ function App() {
           const response = await calls.getToken(code);
           saveToken(response);
 
-          // Clean up the URL
+          // Clean up the URL for clean refresh
           const url = new URL(window.location.href);
           url.searchParams.delete("code");
           const updatedUrl = url.search ? url.href : url.href.replace("?", "");
@@ -62,10 +63,12 @@ function App() {
 
   return (
     <div className="App">
-      {token ? (
-        <div id="loginDisplay">Login</div>
-      ) : (
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : token ? (
         <div id="dashboard">Dashboard</div>
+      ) : (
+        <Login />
       )}
     </div>
   );
