@@ -1,6 +1,6 @@
 import { useState } from "react";
-import StatsOutput from "./StatsOutput.js";
-import type { Playlist } from "./types";
+import StatsOutput from "../StatsOutput/StatsOutput";
+import type { Playlist } from "../../types";
 
 interface PlaylistSidebarProps {
   token: string;

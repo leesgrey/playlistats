@@ -1,18 +1,18 @@
 import { useState, useEffect } from "react";
-import * as calls from "./calls";
-import * as statsLogic from "./stats";
+import * as calls from "../../services/calls";
+import * as statsLogic from "../../services/stats";
 import type {
   SpotifyTrackResponse,
   AudioFeatureResponse,
   AudioFeature,
-} from "./calls";
-import type { IteratedStats } from "./stats";
+} from "../../services/calls";
+import type { IteratedStats } from "../../services/stats";
 
-import ModeDoughnut from "./charts/ModeDoughnut";
-import TimeSigDoughnut from "./charts/TimeSigDoughnut";
-import KeyDoughnut, { KEYNAMES } from "./charts/KeyDoughnut";
-import CustomGraph from "./charts/CustomGraph";
-import GenreDoughnut from "./charts/GenreDoughnut";
+import ModeDoughnut from "../../charts/ModeDoughnut";
+import TimeSigDoughnut from "../../charts/TimeSigDoughnut";
+import KeyDoughnut, { KEYNAMES } from "../../charts/KeyDoughnut";
+import CustomGraph from "../../charts/CustomGraph";
+import GenreDoughnut from "../../charts/GenreDoughnut";
 
 interface StatsOutputProps {
   token: string;

@@ -1,6 +1,11 @@
 import axios from "axios";
-import { PAGE_SIZE } from "./App";
-import type { Playlist } from "./types";
+import { PAGE_SIZE } from "../utils/constants";
+import type { Playlist } from "../types";
+
+const tokenEndpoint = "https://accounts.spotify.com/api/token";
+const clientId = "308136625304484d92879d69e98ccd89";
+//const redirectUri = "https://leesgrey.github.io/playlistats";
+const redirectUri = "http://127.0.0.1:3000";
 
 export interface SpotifyTrack {
   track: {
@@ -39,13 +44,13 @@ export interface AudioFeatureResponse {
 type GetPlaylistsCallback = (
   data: Playlist[],
   previous: string | null,
-  next: string | null
+  next: string | null,
 ) => void;
 
 export function getPlaylists(
   token: string,
   callback: GetPlaylistsCallback,
-  pagLink: string | number | null
+  pagLink: string | number | null,
 ) {
   const url =
     typeof pagLink === "string"
@@ -61,11 +66,11 @@ export function getPlaylists(
 export function getObjects(
   token: string,
   playlistId: string | number | null,
-  callback: (tracks: SpotifyTrackResponse) => void
+  callback: (tracks: SpotifyTrackResponse) => void,
 ) {
   const url = !playlistId
-    ? "https://api.spotify.com/v1/me/playlists?limit=$1"
-    : `https://api.spotify.com/v1/me/playlists?limit=$2{playlistId}/tracks`;
+    ? "https://api.spotify.com/v1/me/playlists?limit=${PAGE_SIZE}"
+    : `https://api.spotify.com/v1/playlists/${playlistId}/tracks?limit=${PAGE_SIZE}`;
   axios
     .get(url, { headers: { Authorization: "Bearer " + token } })
     .then((res) => callback(res.data))
@@ -82,7 +87,7 @@ function getTrackString(trackObjects: SpotifyTrackResponse) {
 export function getFeatures(
   token: string,
   objects: SpotifyTrackResponse,
-  callback: (features: AudioFeatureResponse) => void
+  callback: (features: AudioFeatureResponse) => void,
 ) {
   const ids = getTrackString(objects);
   if (!ids) return;
@@ -99,10 +104,49 @@ export function getFeatures(
 export function getArtistGenres(
   token: string,
   artistEndpoint: string,
-  callback: (genre: string) => void
+  callback: (genre: string) => void,
 ) {
   axios
     .get(artistEndpoint, { headers: { Authorization: "Bearer " + token } })
     .then((res) => callback(res.data.genres[0]))
     .catch((error) => console.error(error));
+}
+
+// auth
+export async function getToken(code: string) {
+  const code_verifier = localStorage.getItem("code_verifier");
+
+  const response = await fetch(tokenEndpoint, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: new URLSearchParams({
+      client_id: clientId,
+      grant_type: "authorization_code",
+      code: code,
+      redirect_uri: redirectUri,
+      code_verifier: code_verifier || "",
+    }),
+  });
+
+  return await response.json();
+}
+
+export async function refreshToken(currentToken: {
+  refresh_token: string | null;
+}) {
+  const response = await fetch(tokenEndpoint, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: new URLSearchParams({
+      client_id: clientId,
+      grant_type: "refresh_token",
+      refresh_token: currentToken.refresh_token || "",
+    }),
+  });
+
+  return await response.json();
 }

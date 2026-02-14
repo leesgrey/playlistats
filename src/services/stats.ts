@@ -45,7 +45,7 @@ export function iterate(stats: RawStatsInput): IteratedStats | null {
   let keys: string[] = [];
 
   const validFeatures = stats.track_features.audio_features.filter(
-    (f): f is AudioFeature => f !== null
+    (f): f is AudioFeature => f !== null,
   );
 
   validFeatures.forEach((track) => {
@@ -83,7 +83,7 @@ export function iterate(stats: RawStatsInput): IteratedStats | null {
     major,
     minor,
     avgPopularity: Math.floor(
-      popularityTotal / stats.track_objects.items.length
+      popularityTotal / stats.track_objects.items.length,
     ),
     mostPopular,
     mostPopularArtist,
@@ -101,7 +101,7 @@ export function iterate(stats: RawStatsInput): IteratedStats | null {
 }
 
 function processArray<T extends string | number>(
-  rawArray: T[]
+  rawArray: T[],
 ): Record<string, number> {
   const count: Record<string, number> = {};
   rawArray.forEach((item) => {
