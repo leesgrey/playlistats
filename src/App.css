@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap");
 
 * {
   margin: 0;
@@ -33,7 +33,7 @@ h1 {
 
 .btn {
   background-color: #a2f5b7;
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
   padding: 0.5rem;
   text-decoration: none;
   color: #0f111d;
@@ -47,7 +47,8 @@ h1 {
   background-color: #ece6e1;
 }
 
-.sidebar {
+#sidebar {
+  background-color: orange;
   width: 16rem;
   height: 100%;
   position: fixed;
@@ -59,7 +60,7 @@ h1 {
 h2 {
   color: #d66767;
   font-size: 2em;
-  font-family: Montserrat;
+  font-family: "Montserrat";
   margin: 1rem auto;
 }
 
@@ -125,7 +126,7 @@ li:hover {
 
 h3 {
   font-size: 3rem;
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
   margin: 0.25rem 2rem 0;
 }
 
@@ -138,7 +139,7 @@ h3 {
   padding-bottom: 0.5rem;
 }
 
-#select { 
+#select {
   text-align: center;
   margin-top: 48vh;
 }
@@ -158,7 +159,6 @@ h3 {
   width: 45rem;
 }
 
-
 .chartLabel {
   margin-bottom: 1rem;
 }
@@ -173,7 +173,7 @@ h3 {
   padding: 1rem 1rem 0.5rem;
 }
 
-#statsContainer { 
+#statsContainer {
   background-color: #1a1b41;
   border-radius: 1rem;
   padding: 1rem;

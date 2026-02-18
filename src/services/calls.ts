@@ -53,7 +53,7 @@ export function getPlaylists(
   const url =
     typeof pagLink === "string"
       ? pagLink
-      : `https://api.spotify.com/v1/me/playlists?limit=${PAGE_SIZE}&offset=${pagLink}`;
+      : `https://api.spotify.com/v1/me/playlists?limit=${PAGE_SIZE}&offset=${0}`;
 
   axios
     .get(url, { headers: { Authorization: "Bearer " + token } })
@@ -112,6 +112,7 @@ export function getArtistGenres(
 
 // auth
 export async function getToken(code: string) {
+  console.log("Exchanging code for token with code:", code);
   const code_verifier = localStorage.getItem("code_verifier");
 
   const response = await fetch(tokenEndpoint, {
@@ -120,10 +121,10 @@ export async function getToken(code: string) {
       "Content-Type": "application/x-www-form-urlencoded",
     },
     body: new URLSearchParams({
-      client_id: clientId,
       grant_type: "authorization_code",
       code: code,
       redirect_uri: redirectUri,
+      client_id: clientId,
       code_verifier: code_verifier || "",
     }),
   });
@@ -144,6 +145,16 @@ export async function refreshToken(currentToken: {
       grant_type: "refresh_token",
       refresh_token: currentToken.refresh_token || "",
     }),
+  });
+
+  return await response.json();
+}
+
+export async function getUserInfo(token: string) {
+  const response = await fetch("https://api.spotify.com/v1/me", {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
   });
 
   return await response.json();
